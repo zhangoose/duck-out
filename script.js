@@ -1,14 +1,15 @@
 var c = document.getElementById('screen');
 var ctx = c.getContext("2d");
-var WIDTH = c.width;  //width of canvas
+var WIDTH = c.width;	//width of canvas
 var HEIGHT = c.height;	//height of canvas
-var x = 10;		//x coordinate for the ball
-var y = 100;	//y coordinate for the ball
+var x = 10;		//x coordinate for the ball (initial)
+var y = 100;	//y coordinate for the ball (initial)
 var chx = 3;	//how much to add to x for ball
 var chy = 3;	//how much to add to y for ball
 var BWIDTH;		//width of bar
 var BHEIGHT;	//height of bar
 var bx = 150;	//x coordinate of bar
+var bx_end = 150 + 50; //end of x bar
 var by = 290;	//y coordinate of bar
 var bchx;		//how much to add to x for bar
 var bchy;		//how much to add to y for bar
@@ -16,9 +17,7 @@ var bchy;		//how much to add to y for bar
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
 		bx = mevent.pageX;
-		console.log("Here");
 	}
-	console.log(mevent.pageX);
 }/*end of mouse function*/
 
 $(document).mousemove(mouse);
@@ -48,12 +47,37 @@ function cdraw(){
 	circle(x,y,8);
 	rectangle(bx,by,50,10);
 
-	if(x > WIDTH || x < 0){
+	// IF ( CURRENT X POSITION OF BALL WENT OVER RIGHT SIDE LIMIT OF CANVAS )
+	// IF ( CURRENT X POSITION OF BALL WENT OVER LEFT SIDE LIMIT OF CANVAS )
+	if(x + chx> WIDTH || x + chx < 0){
+		console.log("x + chx > width || x + chx < 0");
 		chx = -chx;
 	}/*end of if x*/
-	if(y > HEIGHT || y < 0){
-		chy = -chy;
+	
+	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )
+	if(y + chy > HEIGHT){
+
+		if(x > bx && x < bx + 50){
+			console.log("On a paddle");
+			console.log("x : " + x);
+			console.log("bx : " + bx);
+			console.log("bx : " + 50)
+			chx = -chx;
+			chy = -chy;
+		}/*end of if*/
+		else{
+			console.log("should stop because player lost :O ");
+			clearInterval(inter);
+			return;
+		}
 	}/*end of if y*/
+
+	// IF ( CURRENT Y POSITION OF BALL WENT UNDER THE LOWER LIMIT OF CANVAS..... )
+	else if(y + chy < 0){
+		console.log("else if");
+		chy = -chy;
+	}/*end of else if*/
+
 	x = x + chx;
 	y = y + chy;
 }/*end of cdraw*/
@@ -62,7 +86,7 @@ function init(){
 	console.log("width: " + WIDTH);
 	console.log("height: " + HEIGHT);
 
-	setInterval(cdraw,40);
+	inter = setInterval(cdraw,20);
 
 }/*end of init function*/
 
