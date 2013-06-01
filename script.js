@@ -4,8 +4,8 @@ var WIDTH = c.width;	//width of canvas
 var HEIGHT = c.height;	//height of canvas
 var x = 10;		//x coordinate for the ball (initial)
 var y = 100;	//y coordinate for the ball (initial)
-var chx = 3;	//how much to add to x for ball
-var chy = 3;	//how much to add to y for ball
+var chx = 5;	//how much to add to x for ball
+var chy = 5;	//how much to add to y for ball
 var BWIDTH;		//width of bar
 var BHEIGHT;	//height of bar
 var bx = 150;	//x coordinate of bar
@@ -13,6 +13,7 @@ var bx_end = 150 + 50; //end of x bar
 var by = 290;	//y coordinate of bar
 var bchx;		//how much to add to x for bar
 var bchy;		//how much to add to y for bar
+var duckCount;	//to count how many ducks are on screen? may use may not
 
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
@@ -42,11 +43,24 @@ function clearRect(){
 	ctx.clearRect(0,0,WIDTH,HEIGHT);		
 }/*end of clearRect function*/
 
+function ddraw(){
+	//FUNC TO DRAW DUCKS--right now, in a row, but is slow, trash the idea
+	duck(ctx,0,0);
+	duck(ctx,40,0);
+	duck(ctx,80,0);
+	duck(ctx,120,0);
+	duck(ctx,160,0);
+	duck(ctx,200,0);
+}/*end of ddraw function*/
+
 function cdraw(){
+	// to draw circles... aka balls / bars 
 	clearRect();
 	circle(x,y,8);
 	rectangle(bx,by,50,10);
 
+	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
+	
 	// IF ( CURRENT X POSITION OF BALL WENT OVER RIGHT SIDE LIMIT OF CANVAS )
 	// IF ( CURRENT X POSITION OF BALL WENT OVER LEFT SIDE LIMIT OF CANVAS )
 	if(x + chx> WIDTH || x + chx < 0){
@@ -59,6 +73,7 @@ function cdraw(){
 
 		if(x > bx && x < bx + 50){
 			console.log("On a paddle");
+			// DUCK HERE :D
 			console.log("x : " + x);
 			console.log("bx : " + bx);
 			console.log("bx : " + 50)
@@ -87,6 +102,7 @@ function init(){
 	console.log("height: " + HEIGHT);
 
 	inter = setInterval(cdraw,20);
+
 
 }/*end of init function*/
 
