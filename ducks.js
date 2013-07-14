@@ -1,4 +1,3 @@
-console.log("hi, duck.js");
 //var c = document.getElementById('screen')
 //var ctx = c.getContext("2d");
   
@@ -11,7 +10,6 @@ function duck(ctx,x,y){
 }/*end of function duck*/
 
 function drawTop(ctx,x,y) {
-	console.log("here");
 	ctx.beginPath();
 	ctx.moveTo(27 + x ,68 + y);
 	ctx.bezierCurveTo(42 + x, 46 + y, 52 + x, 56 + y, 57 + x , 68 + y);
@@ -23,7 +21,6 @@ function drawTop(ctx,x,y) {
 
 function drawBottom(ctx,x,y){
 
-	console.log("here2");
 	ctx.beginPath();
 	ctx.moveTo(27 + x, 68+ y);
 	ctx.bezierCurveTo(13+ x, 93 + y, 72 + x, 90 + y, 57 + x, 68 + y);
@@ -34,7 +31,6 @@ function drawBottom(ctx,x,y){
 }
 
 function drawEyes(ctx,x,y){
-	console.log("here3");
 	ctx.beginPath();
 	ctx.arc( 37 + x,69 + y, 2,0,2*Math.PI,true);
 	ctx.closePath();
@@ -52,7 +48,6 @@ function drawEyes(ctx,x,y){
 }
 
 function drawMouth(ctx,x,y){
-	console.log("here4");
 	ctx.beginPath();
 	ctx.moveTo(34 + x,75 + y);
 	ctx.bezierCurveTo(34 + x ,72 + y,44 + x,72 + y,48 + x,75 + y);

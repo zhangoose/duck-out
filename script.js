@@ -14,6 +14,8 @@ var by = 290;	//y coordinate of bar
 var bchx;		//how much to add to x for bar
 var bchy;		//how much to add to y for bar
 var duckCount;	//to count how many ducks are on screen? may use may not
+var volleyCount = 1;	// how many volleys done so far
+var posCoords; // array of possible coordinates
 
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
@@ -59,8 +61,10 @@ function cdraw(){
 	circle(x,y,8);
 	rectangle(bx,by,50,10);
 
-	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
+//	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
 	
+
+
 	// IF ( CURRENT X POSITION OF BALL WENT OVER RIGHT SIDE LIMIT OF CANVAS )
 	// IF ( CURRENT X POSITION OF BALL WENT OVER LEFT SIDE LIMIT OF CANVAS )
 	if(x + chx> WIDTH || x + chx < 0){
@@ -106,4 +110,7 @@ function init(){
 
 }/*end of init function*/
 
-init();
+//init();
+posCoords = init_duckArray(c);
+console.log(posCoords);
+fillUpWithDucks(ctx,posCoords);
