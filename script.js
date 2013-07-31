@@ -17,6 +17,10 @@ var duckCount;	//to count how many ducks are on screen? may use may not
 var volleyCount = 1;	// how many volleys done so far
 var posCoords; // array of possible coordinates
 
+
+
+posCoords = init_duckArray(c);
+
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
 		bx = mevent.pageX;
@@ -45,16 +49,6 @@ function clearRect(){
 	ctx.clearRect(0,0,WIDTH,HEIGHT);		
 }/*end of clearRect function*/
 
-function ddraw(){
-	//FUNC TO DRAW DUCKS--right now, in a row, but is slow, trash the idea
-	duck(ctx,0,0);
-	duck(ctx,40,0);
-	duck(ctx,80,0);
-	duck(ctx,120,0);
-	duck(ctx,160,0);
-	duck(ctx,200,0);
-}/*end of ddraw function*/
-
 function cdraw(){
 	// to draw circles... aka balls / bars 
 	clearRect();
@@ -62,7 +56,8 @@ function cdraw(){
 	rectangle(bx,by,50,10);
 
 //	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
-	
+
+	fillUpWithDucks(ctx,posCoords);
 
 
 	// IF ( CURRENT X POSITION OF BALL WENT OVER RIGHT SIDE LIMIT OF CANVAS )
@@ -110,7 +105,5 @@ function init(){
 
 }/*end of init function*/
 
-//init();
-posCoords = init_duckArray(c);
-console.log(posCoords);
-fillUpWithDucks(ctx,posCoords);
+init();
+

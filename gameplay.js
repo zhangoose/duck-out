@@ -1,7 +1,16 @@
+function Duck(xCoord, yCoord){
+	// for the Duck object
+	this.xCoord = xCoord; // xcoord of this duck
+	this.yCoord = yCoord; // ycoord of this duck
+	this.hits = 0; // hits attempted for this duck
+	this.display = false; // to display or not to display
+
+}//end of Duck object initializer
+
 
 function fillUpWithDucks(ctx, coords){
 	// fills up whatever coordinates specified in array 'coords' with duck drawings on screen
-
+	// does the drawing
 	var i; // looper
 
 	for(i = 0 ; i < coords.length;  i=i+2){
@@ -17,6 +26,8 @@ function init_duckArray(c){
 	var NUMDUCKS = 10;
 	var WIDTH  =c.width;
 	var duckBlocks = new Array(NUMDUCKS * 2); // x on odds, y on evens
+			// duckBlocks is the array of duck coords
+
 	var i; // looper for array
 	var offset = WIDTH / 6;
 	var x = 0; // x coord
@@ -55,7 +66,7 @@ function init_duckArray(c){
 
 		}//end of even
 		
-	}//end of for looping through array
+	}//end of for looping through array to populate
 	
 	return duckBlocks;
 
