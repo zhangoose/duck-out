@@ -13,13 +13,14 @@ var bx_end = 150 + 50; //end of x bar
 var by = 290;	//y coordinate of bar
 var bchx;		//how much to add to x for bar
 var bchy;		//how much to add to y for bar
-var duckCount;	//to count how many ducks are on screen? may use may not
+var duckCount = 1;	//to count how many ducks are on screen? may use may not
 var volleyCount = 1;	// how many volleys done so far
-var posCoords; // array of possible coordinates
+var duckBricks; // array of possible coordinates
+var currentIndex; // current index of the duck for hits
 
 
 
-posCoords = init_duckArray(c);
+duckBricks = init_duckArray(c);
 
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
@@ -57,7 +58,7 @@ function cdraw(){
 
 //	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
 
-	fillUpWithDucks(ctx,posCoords);
+	fillUpWithDucks(ctx,duckBricks);
 
 
 	// IF ( CURRENT X POSITION OF BALL WENT OVER RIGHT SIDE LIMIT OF CANVAS )
@@ -72,7 +73,20 @@ function cdraw(){
 
 		if(x > bx && x < bx + 50){
 			console.log("On a paddle");
-			// DUCK HERE :D
+			duckBricks[currentIndex].hits++;
+			console.log("you got " + duckBricks[currentIndex].hits + " hits");
+			if(duckBricks[currentIndex].hits >= 3
+					&& duckBricks[currentIndex].isDead == false){
+				// spawn another duck
+				console.log("spawn another duck");
+				currentIndex = randomDisplaySet(duckBricks);
+				duckCount++;
+				if(duckCount == 10){
+					console.log("DUCKED OUT");
+					clearInterval(inter);
+				}//end ofi f
+			}//end of if more than 3 hits & not dead for taht duck
+
 			console.log("x : " + x);
 			console.log("bx : " + bx);
 			console.log("bx : " + 50)
@@ -105,5 +119,6 @@ function init(){
 
 }/*end of init function*/
 
+currentIndex = randomDisplaySet(duckBricks);
 init();
 

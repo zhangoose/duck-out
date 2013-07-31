@@ -4,6 +4,7 @@ function Duck(xCoord, yCoord){
 	this.yCoord = yCoord; // ycoord of this duck
 	this.hits = 0; // hits attempted for this duck
 	this.display = false; // to display or not to display
+	this.isDead = false; // is the duck dead or not (hit or not)
 
 }//end of Duck object initializer
 
@@ -74,3 +75,24 @@ function init_duckArray(c){
 	return duckBlocks;
 
 }//end of function init_duckArray
+
+function randomDisplaySet(duckArr){
+	// sets the display value of a duck as true 
+	// randomly picks that duck's index
+	// returns that index
+
+	var flag = false; 	
+	var index;
+
+	while(!flag){
+		// to prevent duplicates
+		index = Math.floor(Math.random()*duckArr.length);
+		if(duckArr[index].display != true){
+			duckArr[index].display = true;
+			flag = true;
+		}
+
+	}//end of while !flag
+	return index;
+
+}//end of randomDisplaySet function
