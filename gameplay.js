@@ -5,8 +5,8 @@ function Duck(xCoord, yCoord){
 	this.hits = 0; // hits attempted for this duck
 	this.display = false; // to display or not to display
 	this.isDead = false; // is the duck dead or not (hit or not)
-	this.centerX = -1;	// center radius
-	this.centerY = -1;	// center radius
+	this.centerX = -1;	// center radius initial -1
+	this.centerY = -1;	// center radius initial -1
 
 }//end of Duck object initializer
 

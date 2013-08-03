@@ -8,6 +8,8 @@ var chx = 5;	//how much to add to x for ball
 var chy = 5;	//how much to add to y for ball
 var BWIDTH;		//width of bar
 var BHEIGHT;	//height of bar
+var BALLRADIUS = 6;
+var DUCKRADIUS = 17;
 var bx = 150;	//x coordinate of bar
 var bx_end = 150 + 50; //end of x bar
 var by = 290;	//y coordinate of bar
@@ -21,6 +23,24 @@ var currentIndex; // current index of the duck for hits
 
 
 duckBricks = init_duckArray(c);
+
+function hitDuck(duckArr, x, y){
+	// loop thru duckArr visibles, check if x,y falls under their bounds.
+	// return: true/false (collided or not) 
+	var i; // looper
+
+	for(i = 0; i < duckArr.length; i++){
+		if(duckArr[i].display){
+			if((Math.abs(duckArr[i].centerX - x) <= DUCKRADIUS + BALLRADIUS)
+			|| (Math.abs(duckArr[i].centerY - y) <= DUCKRADIUS + BALLRADIUS)){
+				console.log("collided");
+				return true;
+			}//end of if collided
+		}//end of if displayed
+	}//end of for
+
+	return false;
+}//end of hitDuck function
 
 function mouse(mevent){
 	if(mevent.pageX + 50 < WIDTH && mevent.pageX > 0){
@@ -53,7 +73,7 @@ function clearRect(){
 function cdraw(){
 	// to draw circles... aka balls / bars 
 	clearRect();
-	circle(x,y,8);
+	circle(x,y,BALLRADIUS);
 	rectangle(bx,by,50,10);
 
 //	duck(ctx,Math.floor((Math.random()*300)), Math.floor((Math.random()*150)));
@@ -69,8 +89,9 @@ function cdraw(){
 	}/*end of if x*/
 
 	// IF( BALL HIT A DUCK)
-	if(hitDuck(duckBricks) == true){
+	if(hitDuck(duckBricks,x,y) == true){
 		// COLLISION DETECTION
+		chx = -chx;
 	}//end of if 
 	
 	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )
