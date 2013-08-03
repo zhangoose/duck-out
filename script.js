@@ -4,7 +4,7 @@ var WIDTH = c.width;	//width of canvas
 var HEIGHT = c.height;	//height of canvas
 var x = 10;		//x coordinate for the ball (initial)
 var y = 100;	//y coordinate for the ball (initial)
-var chx = 5;	//how much to add to x for ball
+var chx = 2;	//how much to add to x for ball
 var chy = 5;	//how much to add to y for ball
 var BWIDTH;		//width of bar
 var BHEIGHT;	//height of bar
@@ -96,7 +96,7 @@ function cdraw(){
 		currDuck.isDead = true;
 		duckCount--;
 		chx = -chx;
-		if(duckCount == 0 && ducksComplete(duckBricks)==false){
+/*		if(duckCount == 0 && ducksComplete(duckBricks)==false){
 			console.log("spawn another duck 2");
 			currentIndex = randomDisplaySet(duckBricks);
 			if(duckCount == 10){
@@ -104,6 +104,7 @@ function cdraw(){
 				clearInterval(inter);
 			}//end of if 
 		}//end of if you need to spawn another duck
+		*/
 	}//end of if 
 	
 	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )
@@ -114,8 +115,9 @@ function cdraw(){
 			console.log("On a paddle");
 			duckBricks[currentIndex].hits++;
 			console.log("you got " + duckBricks[currentIndex].hits + " hits");
-			if(duckBricks[currentIndex].hits >= 3
-					&& duckBricks[currentIndex].isDead == false){
+			if( (duckBricks[currentIndex].hits >= 3
+					&& duckBricks[currentIndex].isDead == false)
+					|| (duckCount == 0 && !ducksComplete(duckBricks)) ){
 				// spawn another duck
 				console.log("spawn another duck");
 				currentIndex = randomDisplaySet(duckBricks);
