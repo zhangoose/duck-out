@@ -44,7 +44,6 @@ function drawEyes(ctx,x,y){
 	ctx.stroke();
 	ctx.fillStyle = "black";
 	ctx.fill();
-
 }
 
 function drawMouth(ctx,x,y){

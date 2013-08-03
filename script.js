@@ -67,11 +67,17 @@ function cdraw(){
 		console.log("x + chx > width || x + chx < 0");
 		chx = -chx;
 	}/*end of if x*/
+
+	// IF( BALL HIT A DUCK)
+	if(hitDuck(duckBricks) == true){
+		// COLLISION DETECTION
+	}//end of if 
 	
 	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )
 	if(y + chy > HEIGHT){
 
 		if(x > bx && x < bx + 50){
+			// ON THE PADDLE
 			console.log("On a paddle");
 			duckBricks[currentIndex].hits++;
 			console.log("you got " + duckBricks[currentIndex].hits + " hits");
@@ -80,11 +86,11 @@ function cdraw(){
 				// spawn another duck
 				console.log("spawn another duck");
 				currentIndex = randomDisplaySet(duckBricks);
-				duckCount++;
 				if(duckCount == 10){
 					console.log("DUCKED OUT");
 					clearInterval(inter);
-				}//end ofi f
+				}//end of if
+				duckCount++;
 			}//end of if more than 3 hits & not dead for taht duck
 
 			console.log("x : " + x);
@@ -119,6 +125,6 @@ function init(){
 
 }/*end of init function*/
 
-currentIndex = randomDisplaySet(duckBricks);
+currentIndex = randomDisplaySet(duckBricks); // initialize
 init();
 

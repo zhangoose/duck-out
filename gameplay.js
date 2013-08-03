@@ -5,6 +5,8 @@ function Duck(xCoord, yCoord){
 	this.hits = 0; // hits attempted for this duck
 	this.display = false; // to display or not to display
 	this.isDead = false; // is the duck dead or not (hit or not)
+	this.centerX = -1;	// center radius
+	this.centerY = -1;	// center radius
 
 }//end of Duck object initializer
 
@@ -15,7 +17,7 @@ function printDuck(duckArr){
 	var i;
 
 	for(i = 0; i < duckArr.length; i++){
-		console.log("duckArr["+i+"]: xCoord is " + duckArr[i].xCoord + " & yCoord is " + duckArr[i].yCoord + " & hits is " + duckArr[i].hits + " & display is " + duckArr[i].display);
+		console.log("duckArr["+i+"]: xCoord is " + duckArr[i].xCoord + " & yCoord is " + duckArr[i].yCoord + " & hits is " + duckArr[i].hits + " & display is " + duckArr[i].display + " & centerX is " + duckArr[i].centerX + " & centerY is " + duckArr[i].centerY);
 	}//end of for
 }//end of printDuck
 
@@ -68,6 +70,8 @@ function init_duckArray(c){
 			}//second row
 		
 		duckBlocks[i] = new Duck(x,y); 
+		duckBlocks[i].centerX = 42 + x;
+		duckBlocks[i].centerY = 71 + y;
 		x = x + offset;
 	}//end of for looping through array to populate
 	printDuck(duckBlocks);
