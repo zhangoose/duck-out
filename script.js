@@ -26,20 +26,20 @@ duckBricks = init_duckArray(c);
 
 function hitDuck(duckArr, x, y){
 	// loop thru duckArr visibles, check if x,y falls under their bounds.
-	// return: true/false (collided or not) 
+	// return: which duck was hit <- a duck object
 	var i; // looper
 
 	for(i = 0; i < duckArr.length; i++){
-		if(duckArr[i].display){
+		if(duckArr[i].display == true){
 			if((Math.abs(duckArr[i].centerX - x) <= DUCKRADIUS + BALLRADIUS)
-			|| (Math.abs(duckArr[i].centerY - y) <= DUCKRADIUS + BALLRADIUS)){
-				console.log("collided");
-				return true;
+			&& (Math.abs(duckArr[i].centerY - y) <= DUCKRADIUS + BALLRADIUS)){
+				console.log("COLLIDED");
+				return duckArr[i];
 			}//end of if collided
 		}//end of if displayed
 	}//end of for
 
-	return false;
+	return null;;
 }//end of hitDuck function
 
 function mouse(mevent){
@@ -89,9 +89,21 @@ function cdraw(){
 	}/*end of if x*/
 
 	// IF( BALL HIT A DUCK)
-	if(hitDuck(duckBricks,x,y) == true){
+	if(hitDuck(duckBricks,x,y) != null){
 		// COLLISION DETECTION
+		var currDuck = hitDuck(duckBricks,x,y);
+		currDuck.display = false;		
+		currDuck.isDead = true;
+		duckCount--;
 		chx = -chx;
+		if(duckCount == 0 && ducksComplete(duckBricks)==false){
+			console.log("spawn another duck 2");
+			currentIndex = randomDisplaySet(duckBricks);
+			if(duckCount == 10){
+				console.log("DUCKED OUT 2");
+				clearInterval(inter);
+			}//end of if 
+		}//end of if you need to spawn another duck
 	}//end of if 
 	
 	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )

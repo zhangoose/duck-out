@@ -100,3 +100,14 @@ function randomDisplaySet(duckArr){
 	return index;
 
 }//end of randomDisplaySet function
+
+function ducksComplete(duckArr){
+	// all ducks dead
+	var i;
+	for(i = 0; i < duckArr.length; i++){
+		if(duckArr[i].isDead == false){
+			return false;
+		}//end of if
+	}//end of for
+	return true; // means all ducksa re dead
+}//end of ducksComplete
