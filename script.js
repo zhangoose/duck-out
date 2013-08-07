@@ -4,7 +4,7 @@ var WIDTH = c.width;	//width of canvas
 var HEIGHT = c.height;	//height of canvas
 var x = 10;		//x coordinate for the ball (initial)
 var y = 100;	//y coordinate for the ball (initial)
-var chx = 2;	//how much to add to x for ball
+var chx = 1;	//how much to add to x for ball
 var chy = 5;	//how much to add to y for ball
 var BWIDTH;		//width of bar
 var BHEIGHT;	//height of bar
@@ -19,6 +19,7 @@ var duckCount = 1;	//to count how many ducks are on screen? may use may not
 var volleyCount = 1;	// how many volleys done so far
 var duckBricks; // array of possible coordinates
 var currentIndex; // current index of the duck for hits
+var deadDuckCount = 0; // count the dead ducks
 
 
 
@@ -70,6 +71,20 @@ function clearRect(){
 	ctx.clearRect(0,0,WIDTH,HEIGHT);		
 }/*end of clearRect function*/
 
+function getDucked(){
+	// ending scene when you get ducked out 
+	setTimeout(function(){
+		ctx.beginPath();
+		ctx.fillRect(0,0,WIDTH,HEIGHT);
+		ctx.closePath();
+		ctx.fillStyle = 'black';
+		ctx.fill();
+		duck(ctx,100,100);
+		$("#gamestat").text("ducked out (you lose)");
+	},500);
+	
+}//end of getDucked function
+
 function cdraw(){
 	// to draw circles... aka balls / bars 
 	clearRect();
@@ -85,7 +100,10 @@ function cdraw(){
 	// IF ( CURRENT X POSITION OF BALL WENT OVER LEFT SIDE LIMIT OF CANVAS )
 	if(x + chx> WIDTH || x + chx < 0){
 		console.log("x + chx > width || x + chx < 0");
+		console.log(" WALL: chx is " + chx);
 		chx = -chx;
+		
+		console.log("2WALL: chx is " + chx);
 	}/*end of if x*/
 
 	// IF( BALL HIT A DUCK)
@@ -95,19 +113,13 @@ function cdraw(){
 		currDuck.display = false;		
 		currDuck.isDead = true;
 		duckCount--;
-		chx = -chx;
-/*		if(duckCount == 0 && ducksComplete(duckBricks)==false){
-			console.log("spawn another duck 2");
-			currentIndex = randomDisplaySet(duckBricks);
-			if(duckCount == 10){
-				console.log("DUCKED OUT 2");
-				clearInterval(inter);
-			}//end of if 
-		}//end of if you need to spawn another duck
-		*/
+		deadDuckCount++;
+		$("#text").text("DEAD DUCK COUNT: " + deadDuckCount);
+		//chx = -chx;
+		chy = -chy;
 	}//end of if 
 	
-	// IF ( CURRENT Y POSITION OF BALL WENT OVER UPPER LIMIT OF CANVAS )
+	// IF ( CURRENT Y POSITION OF BALL HIT THE FLOOR OR THE PADDLE )
 	if(y + chy > HEIGHT){
 
 		if(x > bx && x < bx + 50){
@@ -115,33 +127,47 @@ function cdraw(){
 			console.log("On a paddle");
 			duckBricks[currentIndex].hits++;
 			console.log("you got " + duckBricks[currentIndex].hits + " hits");
-			if( (duckBricks[currentIndex].hits >= 3
-					&& duckBricks[currentIndex].isDead == false)
-					|| (duckCount == 0 && !ducksComplete(duckBricks)) ){
+			if( (duckBricks[currentIndex].hits >= 2
+		//			&& duckBricks[currentIndex].isDead == false)
+				)
+					|| (duckCount == 0 && ducksComplete(duckBricks) == false) ){
 				// spawn another duck
 				console.log("spawn another duck");
 				currentIndex = randomDisplaySet(duckBricks);
 				if(duckCount == 10){
 					console.log("DUCKED OUT");
 					clearInterval(inter);
+					getDucked();
 				}//end of if
 				duckCount++;
 			}//end of if more than 3 hits & not dead for taht duck
+			var diff = x - bx;
+			console.log("diff is " + diff);
 
-			console.log("x : " + x);
-			console.log("bx : " + bx);
-			console.log("bx : " + 50)
-			chx = -chx;
+			//chx = -chx;
+			chx = 8 * ((x-(bx_end/2))/(50));
+			console.log("orig: chx = " + chx);
+			if(Math.abs(chx) > 5){
+				if(chx > 0){
+					chx = 3;
+				}
+				else{
+					chx = -3;
+				}//end of if negative
+			}//end of if over limit 
+			console.log("now: chx is " + chx);
 			chy = -chy;
+		
 		}/*end of if*/
 		else{
 			console.log("should stop because player lost :O ");
 			clearInterval(inter);
+			getDucked();
 			return;
 		}
 	}/*end of if y*/
 
-	// IF ( CURRENT Y POSITION OF BALL WENT UNDER THE LOWER LIMIT OF CANVAS..... )
+	// IF ( CURRENT Y POSITION OF BALL HIT THE CEILING..... )
 	else if(y + chy < 0){
 		console.log("else if");
 		chy = -chy;
@@ -149,6 +175,8 @@ function cdraw(){
 
 	x = x + chx;
 	y = y + chy;
+	
+	
 }/*end of cdraw*/
 
 function init(){
